@@ -4,20 +4,24 @@ import { map } from 'rxjs/operators';
 import { v4 as uuidV4 } from 'uuid';
 import produce, { Draft } from 'immer';
 
-const THIRTY_SECONDS = 30 * 1000;
+const THIRTY_SECONDS = 30 * 1000; // Milliseconds
+
+export type ListType = 'stream' | 'liked';
 
 export type Tweet = {
   id: string;
   account: string;
   timestamp: number;
   content: string;
-  liked?: boolean;
+  liked: boolean;
 };
 
 export type TweetStore = {
   tweets: Tweet[];
+  likedTweets: Tweet[];
   addTweet: (tweet: Tweet) => void;
-  toggleLike: (id: string) => void;
+  toggleLike: (tweet: Tweet) => void;
+  clearList: (mode: ListType) => void;
 };
 
 const immer = <T extends State>(
@@ -32,19 +36,45 @@ export const useStore = create<TweetStore>(
   immer<TweetStore>(set => ({
     tweets: [],
     likedTweets: [],
-    addTweet: tweet =>
+    addTweet: tweet => {
       set(state => {
         const filtered = state.tweets.filter(newerThan30Seconds);
         state.tweets = [tweet, ...filtered];
-      }),
-    toggleLike: id => {
+      });
+    },
+    toggleLike: tweet => {
       set(state => {
+        const updatedTweet = { ...tweet, liked: !tweet.liked };
+
         state.tweets = state.tweets.map(t => {
-          if (t.id === id) {
-            t.liked = !t.liked;
-          }
-          return t;
+          return t.id === updatedTweet.id ? updatedTweet : t;
         });
+
+        if (updatedTweet.liked) {
+          state.likedTweets.unshift(updatedTweet);
+        } else {
+          state.likedTweets = state.likedTweets.filter(
+            t => t.id !== updatedTweet.id,
+          );
+        }
+      });
+    },
+    clearList: mode => {
+      set(state => {
+        switch (mode) {
+          case 'liked':
+            state.likedTweets.forEach(tweet => {
+              const foundIndex = state.tweets.findIndex(t => tweet.id === t.id);
+              if (foundIndex > -1) {
+                state.tweets.splice(foundIndex, 1);
+              }
+            });
+            state.likedTweets = [];
+            return;
+          case 'stream':
+            state.tweets = [];
+            return;
+        }
       });
     },
   })),

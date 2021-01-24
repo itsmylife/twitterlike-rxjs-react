@@ -7,12 +7,14 @@ export const TweeterLike: FC = () => {
   const toggleLike = useStore(state => state.toggleLike);
   const allTweets = useStore(state => state.tweets);
   const likedTweets = useStore(state => state.likedTweets);
+  const clearList = useStore(state => state.clearList);
 
   return (
     <div>
       <div>
         <button onClick={() => setMode('stream')}>All Tweets</button>
         <button onClick={() => setMode('liked')}>Liked Tweets</button>
+        <button onClick={() => clearList(mode)}>Clear the List</button>
       </div>
       <div>
         <h2>{mode === 'liked' ? 'Liked Tweets' : 'Tweet Stream'}</h2>
