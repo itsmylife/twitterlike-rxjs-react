@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Tweet } from '../store/tweet';
+import { Tweet } from '../store/tweet-store';
 import classNames from 'classnames';
 import styles from './TweetList.module.css';
 
