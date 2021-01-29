@@ -24,6 +24,11 @@ export type TweetStore = {
   clearList: (mode: ListType) => void;
 };
 
+/**
+ * For state immutability without spreading the existing state first
+ * See https://immerjs.github.io/immer/docs/introduction
+ * See https://github.com/pmndrs/zustand#middleware
+ */
 const immer = <T extends State>(
   config: StateCreator<T, (fn: (draft: Draft<T>) => void) => void>,
 ): StateCreator<T> => (set, get, api) =>
@@ -33,6 +38,7 @@ const newerThan30Seconds = (item: Tweet) =>
   item.timestamp + THIRTY_SECONDS > Date.now();
 
 export const useStore = create<TweetStore>(
+  /** See zustand Middleware https://github.com/pmndrs/zustand#middleware */
   immer<TweetStore>(set => ({
     tweets: [],
     likedTweets: [],
@@ -80,6 +86,16 @@ export const useStore = create<TweetStore>(
   })),
 );
 
+/**
+ * Read from stream
+ */
 tweets
+  /**
+   * Liked => false for all new tweet
+   * Id    => Unique id for easy operations
+   */
   .pipe(map(item => ({ ...item, liked: false, id: uuidV4() })))
+  /**
+   * Save them in the state
+   */
   .subscribe((newTweet: Tweet) => useStore.getState().addTweet(newTweet));

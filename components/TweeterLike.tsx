@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import { ListType, useStore } from '../store/tweet';
+import { ListType, useStore } from '../store/tweet-store';
 import { TweetList } from './TweetList';
 
 export const TweeterLike: FC = () => {
