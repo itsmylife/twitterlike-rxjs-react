@@ -7,7 +7,7 @@
     "forceConsistentCasingInFileNames": true,
     "jsx": "react",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "isolatedModules": false,
+    "isolatedModules": true,
     "noEmit": true,
     "module": "esnext",
     "moduleResolution": "node",
@@ -23,6 +23,6 @@
     "target": "ES2019",
     "types": ["jest", "node"]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/**/*"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules", ".next"]
 }
