@@ -1,5 +1,5 @@
 import { TweeterLike } from '../components/TweeterLike';
-import styles from './/Home.module.css';
+import styles from './Home.module.css';
 
 export default function Home() {
   return (
