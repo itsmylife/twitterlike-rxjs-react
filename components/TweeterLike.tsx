@@ -20,6 +20,7 @@ export const TweeterLike: FC = () => {
         <h2>{mode === 'liked' ? 'Liked Tweets' : 'Tweet Stream'}</h2>
       </div>
       <hr />
+      <h3>Tweets Liked: {likedTweets.length}</h3>
       <TweetList
         tweets={mode === 'liked' ? likedTweets : allTweets}
         onChangeLike={toggleLike}

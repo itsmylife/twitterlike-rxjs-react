@@ -11,15 +11,12 @@ interface IProps {
 export const TweetList: FC<IProps> = props => {
   const { tweets, onChangeLike } = props;
   return (
-    <>
-      <h3>Tweets Liked: {tweets.filter(t => t.liked).length}</h3>
-      <ul className={styles.list}>
-        {tweets.map(tweet => (
-          <li key={tweet.id}>
-            <TweetBox tweet={tweet} onChangeLike={onChangeLike} />
-          </li>
-        ))}
-      </ul>
-    </>
+    <ul className={styles.list}>
+      {tweets.map(tweet => (
+        <li key={tweet.id}>
+          <TweetBox tweet={tweet} onChangeLike={onChangeLike} />
+        </li>
+      ))}
+    </ul>
   );
 };
