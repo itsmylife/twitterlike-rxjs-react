@@ -35,3 +35,9 @@ $ npm run test
 - Then the component `TweeterLike.tsx` reads the data and render it.
 - When a tweet liked it will be added to liked tweets and it can be visible separately under liked tweets section.
 - Tweets that older than 30 seconds will be removed. But liked tweets will stay forever until they will be unliked.
+
+## Things I would like to do if I have more time
+- TweeterLike component should contain two different components that have one header (buttons, like counter), and one list renderer. Each component header/list should reach the zustand store by its own. So we prevent unnecessary reconciliation steps. 
+- A better UI/UX 
+- Cypress e2e tests
+- Vercel/Netlify deployment options with Github Actions 
