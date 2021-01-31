@@ -1,8 +1,7 @@
 import { FC } from 'react';
 import { Tweet } from '../store/tweet-store';
-
+import { TweetBox } from './TweetBox';
 import styles from './TweetList.module.css';
-import { TweetBox } from './Tweet';
 
 interface IProps {
   tweets: Tweet[];
